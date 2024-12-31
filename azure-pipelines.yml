@@ -14,15 +14,11 @@ steps:
     pip install -r requirements.txt
   displayName: 'Install Python Dependencies'
 
-# Step 2: Create ZIP package
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
-    replaceExistingArchive: true
-  displayName: 'Archive application files'
+# Step 2: Create ZIP File of Build Output Using 7-Zip
+- script: |
+    mkdir $(Build.ArtifactStagingDirectory)
+    7z a $(Build.ArtifactStagingDirectory)\app.zip $(System.DefaultWorkingDirectory)\* || exit 0
+  displayName: 'Create ZIP File of Build Output Using 7-Zip'
 
 # Step 3: Publish artifact
 - task: PublishBuildArtifacts@1
