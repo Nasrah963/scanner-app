@@ -14,26 +14,15 @@ steps:
     pip install -r requirements.txt
   displayName: 'Install Python Dependencies'
 
-# Step 2: Create ZIP File of Build Output Using 7-Zip
+# Step 3: Create ZIP File of Build Output Using 7-Zip
 - script: |
     mkdir $(Build.ArtifactStagingDirectory)
     7z a $(Build.ArtifactStagingDirectory)\app.zip $(System.DefaultWorkingDirectory)\* || exit 0
   displayName: 'Create ZIP File of Build Output Using 7-Zip'
 
-# Step 3: Publish artifact
+# Step 4: Publish Build Artifacts
 - task: PublishBuildArtifacts@1
   inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    pathToPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: 'drop'
-    publishLocation: 'Container'
-  displayName: 'Publish Build Artifacts'
-
-# Step 4: Deploy to Azure App Service
-- task: AzureWebApp@1
-  inputs:
-    azureSubscription: 'ScannerAppConnection'  # Azure DevOps service connection
-    appType: 'webApp'
-    appName: 'ScannerApp'  # Azure App Service name
-    package: $(System.DefaultWorkingDirectory)
-  displayName: 'Deploy Flask App to Azure'
 
