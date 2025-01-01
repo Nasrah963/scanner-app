@@ -8,35 +8,32 @@ pool:
 
 steps:
 
-# Step 1: Install dependencies
+# Step 2: Create a virtual environment and install dependencies
 - script: |
+    python -m venv antenv
+    source antenv/bin/activate
     python -m pip install --upgrade pip
     pip install -r requirements.txt
-  displayName: 'Install Python Dependencies'
+  displayName: 'Create Virtual Environment and Install Dependencies'
 
-# Step 2: Create ZIP package
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
-    replaceExistingArchive: true
-  displayName: 'Archive application files'
+# Step 3: Create ZIP package including virtual environment
+- script: |
+    zip -r app.zip antenv app.py requirements.txt
+  displayName: 'Package Application and Virtual Environment'
 
-# Step 3: Publish artifact
+# Step 4: Publish artifact
 - task: PublishBuildArtifacts@1
   inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    pathtoPublish: 'app.zip'
     artifactName: 'drop'
     publishLocation: 'Container'
   displayName: 'Publish Build Artifacts'
 
-# Step 4: Deploy to Azure App Service
+# Step 5: Deploy to Azure App Service
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'ScannerAppConnection'  # Azure DevOps service connection
     appType: 'webApp'
     appName: 'ScannerApp'  # Azure App Service name
-    package: '$(Build.ArtifactStagingDirectory)'
+    package: '$(Build.ArtifactStagingDirectory)/app.zip'
   displayName: 'Deploy Flask App to Azure'
