@@ -7,7 +7,9 @@ password = os.getenv('AZURE_MYSQL_PASSWORD')
 hostname = os.getenv('AZURE_MYSQL_HOST')
 database = os.getenv('AZURE_MYSQL_NAME')
 
+print("-----------------------------------------------")
 print(username, password, hostname, database)
+print("-----------------------------------------------")
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{username}:{password}@{hostname}/{database}'
