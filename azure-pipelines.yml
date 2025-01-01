@@ -35,5 +35,4 @@ steps:
     azureSubscription: 'ScannerAppConnection'
     appType: 'webApp'
     appName: 'ScannerApp'
-    package: '$(System.DefaultWorkingDirectory)\1\a\*.zip'
 
