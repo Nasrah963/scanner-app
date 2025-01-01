@@ -56,3 +56,4 @@ steps:
     appName: 'ScannerApp'
     package: '$(ArtifactPath)'
   displayName: 'Deploy Flask App to Azure'
+
