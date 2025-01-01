@@ -17,9 +17,9 @@ else
 fi
 
 # Attempt to activate the virtual environment
-if [ -f "antenv/Scripts/activate" ]; then
+if [ -f "antenv/bin/activate" ]; then
     echo "Activating virtual environment."
-    source antenv/Scripts/activate
+    source antenv/bin/activate
 else
     echo "Virtual environment activation script not found!"
 fi
@@ -27,4 +27,3 @@ fi
 # Log the Python path
 echo "Python path:"
 which python
-
