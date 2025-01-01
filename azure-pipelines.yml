@@ -30,3 +30,9 @@ steps:
     pathToPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: 'drop'
 
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'ScannerAppConnection'
+    appType: 'webApp'
+    appName: 'ScannerApp'
+    package: '$(System.DefaultWorkingDirectory)\**\*.zip'
