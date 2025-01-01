@@ -16,6 +16,10 @@ steps:
     pip install -r requirements.txt
   displayName: 'Create Virtual Environment and Install Dependencies'
 
+- script: |
+    echo antenv > .oryx_env
+  displayName: 'Set Oryx Virtual Environment'
+
 # Step 3: Create ZIP package using ArchiveFiles
 - task: ArchiveFiles@2
   inputs:
