@@ -1,10 +1,16 @@
-from flask import Flask
+from flask import Flask, request, jsonify, render_template
+from flask_sqlalchemy import SQLAlchemy
+import os
 
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return "Hello, Azure!"
+db = SQLAlchemy(app)
 
-if __name__ == "__main__":
+
+# Serve Frontend
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+if __name__ == '__main__':
     app.run()
