@@ -11,20 +11,25 @@ steps:
 # Step 2: Create a virtual environment and install dependencies
 - script: |
     python -m venv antenv
-    source antenv/bin/activate
+    call antenv\Scripts\activate
     python -m pip install --upgrade pip
     pip install -r requirements.txt
   displayName: 'Create Virtual Environment and Install Dependencies'
 
-# Step 3: Create ZIP package including virtual environment
-- script: |
-    zip -r app.zip antenv app.py requirements.txt
-  displayName: 'Package Application and Virtual Environment'
+# Step 3: Create ZIP package using ArchiveFiles
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
+    replaceExistingArchive: true
+  displayName: 'Archive Application Files'
 
 # Step 4: Publish artifact
 - task: PublishBuildArtifacts@1
   inputs:
-    pathtoPublish: 'app.zip'
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: 'drop'
     publishLocation: 'Container'
   displayName: 'Publish Build Artifacts'
