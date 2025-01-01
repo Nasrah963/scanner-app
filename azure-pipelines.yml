@@ -38,5 +38,5 @@ steps:
     azureSubscription: 'ScannerAppConnection'  # Azure DevOps service connection
     appType: 'webApp'
     appName: 'ScannerApp'  # Azure App Service name
-    package: $(System.DefaultWorkingDirectory)
+    package: '$(System.DefaultWorkingDirectory)\1\a\*.zip'
   displayName: 'Deploy Flask App to Azure'
