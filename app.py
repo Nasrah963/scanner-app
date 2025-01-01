@@ -10,7 +10,7 @@ db = SQLAlchemy(app)
 # Serve Frontend
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return "Hello, Azure!"
 
 if __name__ == '__main__':
     app.run()
