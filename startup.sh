@@ -27,3 +27,6 @@ fi
 # Log the Python path
 echo "Python path:"
 which python
+
+# Start the application
+exec gunicorn --bind=0.0.0.0:8000 app:app
