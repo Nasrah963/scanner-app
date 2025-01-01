@@ -38,6 +38,11 @@ steps:
     publishLocation: 'Container'
   displayName: 'Publish Build Artifacts'
 
+- script: |
+    antenv\Scripts\activate
+    pip list
+  displayName: 'Verify Installed Dependencies'
+
 # Step 5: Deploy to Azure App Service
 - task: AzureWebApp@1
   inputs:
